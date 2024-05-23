@@ -1,5 +1,6 @@
 const jwt =require('jsonwebtoken')
   async function generateToken(storeData, res) {
+
     try {
       const Token =  await jwt.sign({ user: storeData }, process.env.jwtSecretKey)
       return Token
@@ -27,7 +28,6 @@ console.error(er);    }
   auth = (auth) => async (req, res, next) => {
     try {
       const tokenHeader = req.headers.authorization;
-  
       if (!tokenHeader)
         return res.status(401).json({ "message": "Token not found" });
       const token = tokenHeader.split(" ")[1];
