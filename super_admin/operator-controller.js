@@ -30,13 +30,15 @@ function createPassword() {
 const addAdmin = async (req, res) => {
   try {
     const { name, currency } = req.body
-   const user_id = await generateUserId(name)
-   const password = await createPassword()
-   const hash = await hashPassword(password)
+    const user_id = await generateUserId(name)
+    const password = await createPassword()
+    //  const hash = await hashPassword(password)
+    const hash = await Encryption(password)
+
     const client_secret = uuidv4()
-    await write.query("INSERT INTO user_credentials(user_id, password , role) VALUES (?, ? , ?)", [user_id, hash , "ADMIN"])
-    let SQL_admin_credentials =" INSERT INTO `admin_credentials`(`user_id`, `currency`,`client_secret`, `name`)VALUES(?, ?, ? , ?);"
-    await write.query(SQL_admin_credentials, [user_id,  currency , client_secret ,name])
+    await write.query("INSERT INTO user_credentials(user_id, password , role) VALUES (?, ? , ?)", [user_id, hash, "ADMIN"])
+    let SQL_admin_profile = " INSERT INTO `admin_profile`(`user_id`, `currency`,`client_secret`, `name`)VALUES(?, ?, ? , ?);"
+    await write.query(SQL_admin_profile, [user_id, currency, client_secret, name])
     return res.status(200).send({ status: true, user_id, password, msg: "ADMIN ADD SUCCESSFULLY" })
   } catch (er) {
     console.log(er)
@@ -47,7 +49,7 @@ const addAdmin = async (req, res) => {
 
 const getAdmins = async (req, res) => {
   try {
-    const [data] = await read.query("SELECT * FROM admin_credentials order by id DESC")
+    const [data] = await read.query("SELECT * FROM admin_profile order by id DESC")
     return res.status(200).send({ status: true, data })
   } catch (er) {
     console.error(er);
@@ -58,8 +60,13 @@ const getAdmins = async (req, res) => {
 const DeleteOperator = async (req, res) => {
   try {
     const { user_id } = req.query
-    const [data] = await read.query("DELETE FROM operator WHERE user_id = ?", [user_id])
-    return res.status(200).send({ status: true, msg: "operator delete successfully" })
+    const [data] = await read.query("DELETE FROM admin_profile WHERE user_id = ?", [user_id])
+    if(data.affectedRows){
+      return res.status(200).send({ status: true, msg: "ADMIN delete successfully" })
+    }else{
+      return res.status(200).send({ status: true, msg: "ADMIN NOT delete successfully" })
+
+    }
   } catch (er) {
     console.error(er);
     return res.status(500).json({ msg: "Internal server Error", status: false, ERROR: er })
@@ -68,10 +75,35 @@ const DeleteOperator = async (req, res) => {
 
 const updateOperator = async (req, res) => {
   try {
-    const { is_active, user_id } = req.body
-    const [data] = await read.query("UPDATE admin_credentials SET  is_active = ? WHERE user_id = ?", [is_active, user_id])
-
+    const { user_id } = req.body
+    delete req.body.user_id 
+    
+  
+    const [data] = await read.query("UPDATE admin_profile SET ? WHERE user_id = ?", [req.body, user_id])
     return res.status(200).send({ status: true, msg: "operator updated successfully" })
+  } catch (er) {
+    console.error(er);
+    return res.status(500).json({ msg: "Internal server Error", status: false, ERROR: er })
+  }
+}
+
+
+const resetPassword = async (req, res) => {
+  try {
+    const { user_id, password, newPassword } = req.body
+console.log(user_id, password, newPassword)
+    const [data] = await read.query("SELECT user_id , password , role FROM user_credentials where user_id = ?", [user_id])
+    if (data.length > 0) {
+      const checkPassword = password == await Decryption(data[0].password)
+      if (!checkPassword) {
+        return res.status(401).json({ status: false, msg: "Missing or Incorrect Credentials" });
+      }
+      const EncryptionPassword = await Encryption(newPassword)
+       await read.query("UPDATE user_credentials SET password = ? WHERE user_id = ?", [EncryptionPassword, user_id])
+      return res.status(200).send({ status: true, msg: "reset Password successfully !!!" })
+    } else {
+      return res.status(404).json({ status: false, msg: "USER NOT EXIST" })
+    }
   } catch (er) {
     console.error(er);
     return res.status(500).json({ msg: "Internal server Error", status: false, ERROR: er })
@@ -82,5 +114,6 @@ module.exports = {
   addAdmin,
   getAdmins,
   DeleteOperator,
-  updateOperator
+  updateOperator,
+  resetPassword
 }
