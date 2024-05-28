@@ -5,7 +5,7 @@ const { generateToken } = require('../jwt/jsonwebtoken')
 
 const login = async (req, res) => {
   try {
-    const { user_id, password } = req.body
+    const { user_id , password } = req.body
     const [data] = await read.query("SELECT user_id , password , role FROM user_credentials where user_id = ?", [user_id])
     if (data.length > 0) {
       const checkPassword = await compare(password, data[0].password)

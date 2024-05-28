@@ -19,7 +19,7 @@ const loginOperator = async (req, res) => {
       const { user_id, password } = req.body
       const [data] = await read.query("SELECT user_id , password , role FROM user_credentials where user_id = ?", [user_id])
       if(data.length > 0) {
-        const checkPassword = password == await Decryption(data[0].password)
+        const checkPassword =await compare(password, data[0].password)
         if (!checkPassword) {
           return res.status(401).json({ status: false, msg: "Missing or Incorrect Credentials" });
         }

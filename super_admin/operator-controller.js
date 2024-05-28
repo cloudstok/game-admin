@@ -33,7 +33,7 @@ const addAdmin = async (req, res) => {
     const user_id = await generateUserId(name)
     const password = await createPassword()
     //  const hash = await hashPassword(password)
-    const hash = await Encryption(password)
+     const hash = await hashPassword(password)
 
     const client_secret = uuidv4()
     await write.query("INSERT INTO user_credentials(user_id, password , role) VALUES (?, ? , ?)", [user_id, hash, "ADMIN"])

@@ -1,5 +1,5 @@
 create database admin_game;
-use admin_game
+use admin_game;
 
 CREATE TABLE `user_credentials` (
    `id` int NOT NULL AUTO_INCREMENT,
