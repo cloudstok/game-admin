@@ -39,6 +39,7 @@ CREATE TABLE `user_profile` (
    `phone` varchar(20) DEFAULT NULL,
    `amount` varchar(255) DEFAULT NULL,
    `is_deleted` tinyint(1) NOT NULL DEFAULT '1',
+    `created_by` varchar(255) NOT NULL
    `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
    `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    PRIMARY KEY (`id`)

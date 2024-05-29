@@ -131,5 +131,6 @@ module.exports = {
   DeleteOperator,
   updateOperator,
   resetPassword,
-  changePassword
+  changePassword,
+  generateUserId
 }
