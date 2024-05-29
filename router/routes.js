@@ -5,7 +5,7 @@ const { roundStats, getBet } = require('../admin/bet')
 const { loginOperator, selfOperator } = require('../admin/controller')
 const { addUser, getUser, updateUser } = require('../user/controller')
 const upload = require('../middleware/multer')
-const { verifyUser } = require('../wallet/controller')
+const { verifyUser, getWallet, updateWallet } = require('../wallet/controller')
 
 const routes = require('express').Router()
 
@@ -81,7 +81,11 @@ routes.delete('/admin/users',  auth(['ADMIN']) ,updateUser); // Soft Delete Only
 
 
 
-routes.post('/admin/users/wallet', verifyUser);
+routes.post('/admin/users/wallet',auth(['ADMIN']), verifyUser);
+routes.get('/admin/users/wallet',auth(['ADMIN']), getWallet);
+routes.put('/admin/users/wallet',auth(['ADMIN']), updateWallet);
+
+
 
 // routes.post('/upload', async (req, res) => {
 // // const [data] = await read.query("select id ,url from images")
