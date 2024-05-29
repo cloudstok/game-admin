@@ -5,6 +5,7 @@ const { roundStats, getBet } = require('../admin/bet')
 const { loginOperator, selfOperator } = require('../admin/controller')
 const { addUser, getUser, updateUser } = require('../user/controller')
 const upload = require('../middleware/multer')
+const { verifyUser } = require('../wallet/controller')
 
 const routes = require('express').Router()
 
@@ -68,17 +69,19 @@ routes.post('/admin/login', loginOperator)  // login Admin
 routes.get('admin/bet', auth(['ADMIN']), getBet) // admin find bet data
 routes.get('/admin/round/stats', auth(['ADMIN']), roundStats) // Admin find  round stats data
 routes.get('/admin/self/admin  ', auth(['ADMIN']), selfOperator) // Admin find Self Data
-routes.post('/admin/add/user', auth(['ADMIN']), addUser)  // admin Add to user
+//routes.post('/admin/add/user', auth(['ADMIN']), addUser)  // admin Add to user
 routes.post('/admin/reset/password' , auth(['admin']), resetPassword)  //super admin  and admin reset  password 
 routes.post('/superAdmin/change/password' , auth(['SUPERADMIN']), changePassword)  //super admin  change password for admin 
 
 
-routes.get('/admin/users', getUser)
-routes.post('/admin/users', ()=>{});  // Internal API for testing Will not be available
+routes.get('/admin/users', auth(['admin']), getUser)
+routes.post('/admin/users',addUser);  // Internal API for testing Will not be available
 routes.put('/admin/users', updateUser);  // Only Self for user
 routes.delete('/admin/users', updateUser); // Soft Delete Only
 
 
+
+routes.post('/admin/users/wallet', verifyUser);
 
 // routes.post('/upload', async (req, res) => {
 // // const [data] = await read.query("select id ,url from images")
