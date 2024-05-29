@@ -6,7 +6,6 @@ const { generateUserId } = require("../super_admin/operator-controller");
 const addUser = async (req ,res)=>{
     try{
 const {name}= req.body;
-
    const userid = await generateUserId(name)
    const amount = 3000
    const { id ,client_secret , user_id , currency} = res.locals.auth.user

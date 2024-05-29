@@ -7,7 +7,6 @@ const {name}= req.body;
    const { id ,client_secret , user_id , currency} = res.locals.auth.user
 const sql = "insert into user_profile (user_id , name , amount  , created_by) values(?, ?,?, ?)"
 await write.query(sql , [userid , name , amount , user_id])
-
 // const encryptionData = await Encryption({name , id ,client_secret , user_id , currency})
 // const Token = await generateToken(encryptionData, res)
         return res.status(200).send({ status: true, msg : "user add successfully" })

@@ -64,20 +64,20 @@ routes.post('/superAdmin/login', login) // login super Admin
 routes.post('/superAdmin/admin', auth(['SUPERADMIN']), addAdmin) // super Admin add to admin
 routes.get('/superAdmin/admin', auth(['SUPERADMIN']), getAdmins)  // super Admin find All Admin
 routes.delete('/superAdmin/admin', auth(['SUPERADMIN']), DeleteOperator)  // super Admin Delete  admin
-routes.put('/superAdmin/admin', auth(['SUPERADMIN' , 'admin']), updateOperator) // super Admin and Admin update  Admin data
+routes.put('/superAdmin/admin', auth(['SUPERADMIN' , 'ADMIN']), updateOperator) // super Admin and Admin update  Admin data
 routes.post('/admin/login', loginOperator)  // login Admin 
 routes.get('admin/bet', auth(['ADMIN']), getBet) // admin find bet data
 routes.get('/admin/round/stats', auth(['ADMIN']), roundStats) // Admin find  round stats data
 routes.get('/admin/self/admin  ', auth(['ADMIN']), selfOperator) // Admin find Self Data
 //routes.post('/admin/add/user', auth(['ADMIN']), addUser)  // admin Add to user
-routes.post('/admin/reset/password' , auth(['admin']), resetPassword)  //super admin  and admin reset  password 
+routes.post('/admin/reset/password' , auth(['ADMIN']), resetPassword)  //super admin  and admin reset  password 
 routes.post('/superAdmin/change/password' , auth(['SUPERADMIN']), changePassword)  //super admin  change password for admin 
 
 
-routes.get('/admin/users', auth(['admin']), getUser)
-routes.post('/admin/users',addUser);  // Internal API for testing Will not be available
-routes.put('/admin/users', updateUser);  // Only Self for user
-routes.delete('/admin/users', updateUser); // Soft Delete Only
+routes.get('/admin/users', auth(['ADMIN']), getUser)
+routes.post('/admin/users', auth(['ADMIN']),addUser);  // Internal API for testing Will not be available
+routes.put('/admin/users', auth(['ADMIN']), updateUser);  // Only Self for user
+routes.delete('/admin/users',  auth(['ADMIN']) ,updateUser); // Soft Delete Only
 
 
 
