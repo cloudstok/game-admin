@@ -118,7 +118,7 @@ const changePassword = async (req, res) => {
     const hash = await hashPassword(password)
  
     await read.query("UPDATE user_credentials SET password = ? WHERE user_id = ?", [hash, user_id])
-    return res.status(200).send({ status: true, msg: "operator updated successfully" })
+    return res.status(200).send({ status: true, msg: "change password successfully" })
   } catch (er) {
     console.error(er);
     return res.status(500).json({ msg: "Internal server Error", status: false, ERROR: er })
