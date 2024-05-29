@@ -77,8 +77,7 @@ const updateOperator = async (req, res) => {
   try {
     const { user_id } = req.body
     delete req.body.user_id 
-    
-  
+
     const [data] = await read.query("UPDATE admin_profile SET ? WHERE user_id = ?", [req.body, user_id])
     return res.status(200).send({ status: true, msg: "operator updated successfully" })
   } catch (er) {
@@ -110,10 +109,27 @@ console.log(user_id, password, newPassword)
   }
 }
 
+
+
+const changePassword = async (req, res) => {
+  try {
+    const { user_id , password } = req.body
+   
+    const hash = await hashPassword(password)
+ 
+    await read.query("UPDATE admin_profile SET password = ? WHERE user_id = ?", [hash, user_id])
+    return res.status(200).send({ status: true, msg: "operator updated successfully" })
+  } catch (er) {
+    console.error(er);
+    return res.status(500).json({ msg: "Internal server Error", status: false, ERROR: er })
+  }
+}
+
 module.exports = {
   addAdmin,
   getAdmins,
   DeleteOperator,
   updateOperator,
-  resetPassword
+  resetPassword,
+  changePassword
 }

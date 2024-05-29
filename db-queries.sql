@@ -6,6 +6,7 @@ CREATE TABLE `user_credentials` (
    `user_id` varchar(255) NOT NULL,
    `password` varchar(255) NOT NULL,
    `role` ENUM('ADMIN', 'SUPERADMIN') DEFAULT 'ADMIN' ,
+   `is_deleted` tinyint(1) NOT NULL DEFAULT '1',
    `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
    `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    PRIMARY KEY (`id`)
@@ -22,6 +23,7 @@ CREATE TABLE `admin_profile` (
    `name` varchar(255) ,
    `email` varchar(255),
    `phone` varchar(20),
+   `is_deleted` tinyint(1) NOT NULL DEFAULT '1',
    `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
    `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    PRIMARY KEY (`id`)
@@ -31,15 +33,15 @@ CREATE TABLE `admin_profile` (
 CREATE TABLE `user_profile` (
    `id` int NOT NULL AUTO_INCREMENT,
    `user_id` varchar(255) NOT NULL,
-   `is_active` boolean NOT NULL DEFAULT 1,
+   `is_active` tinyint(1) NOT NULL DEFAULT '1',
    `name` varchar(255) NOT NULL,
-   `email` varchar(255) NOT NULL,
-   `phone` varchar(20) NOT NULL,
+   `email` varchar(255) DEFAULT NULL,
+   `phone` varchar(20) DEFAULT NULL,
+   `amount` varchar(255) DEFAULT NULL,
+   `is_deleted` tinyint(1) NOT NULL DEFAULT '1',
    `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
    `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
+ ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 
