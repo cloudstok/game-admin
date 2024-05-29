@@ -17,7 +17,7 @@ await write.query(sql , [req.body.user_id  , amount , user_id])
 const getWallet = async(req ,res)=>{
     try{
         const sql = "SELECT * FROM wallet"
-       const data = await read.query(sql)
+       const [data] = await read.query(sql)
        return res.status(200).send({ status: true, msg : "Find Data" , data })
 
     }catch(er){
