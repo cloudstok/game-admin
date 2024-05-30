@@ -23,7 +23,7 @@ await write.query(sql , [userid , name  , user_id])
 
 const getUser = async(req ,res )=>{
     try{
-        const sql = "SELECT * FROM user_profile"
+        const sql = "SELECT * FROM user_profile where is_deleted = 1"
         const [data] = await read.query(sql)
          return res.status(200).send({status :true , msg : "Find data" , data})
     }catch(er){
@@ -35,8 +35,8 @@ const getUser = async(req ,res )=>{
 
 const updateUser = async(req ,res )=>{
     try{
-        const user_id = req.body.user_id
-        delete req.body.user_id
+        const user_id = req.query.user_id
+       
         const sql = "update  user_profile set ? where user_id = ?"
         const [data] = await read.query(sql , [req.body , user_id])
         if(data.affectedRows != 0){
