@@ -22,26 +22,26 @@ routes.get('/', async (req, res) => {
  */
 
 
-routes.get('/admin/operators', ()=>{});
-routes.post('/admin/operators', ()=>{});
-/**
- * 1. Can reset passoword (Self and superadmin)
- * 3. Can disable/Enable Operator (disable ALL API ASsosiated with the operator)
- */
-routes.put('/admin/operators', ()=>{}); // Only Self for admin   
-routes.delete('/admin/operators', ()=>{}); // Soft Delete Only
+// routes.get('/admin/operators', ()=>{});
+// routes.post('/admin/operators', ()=>{});
+// /**
+//  * 1. Can reset passoword (Self and superadmin)
+//  * 3. Can disable/Enable Operator (disable ALL API ASsosiated with the operator)
+//  */
+// routes.put('/admin/operators', ()=>{}); // Only Self for admin   
+// routes.delete('/admin/operators', ()=>{}); // Soft Delete Only
 
-/**
- * All admins can get update their API Credentials 
- */
-routes.get('/admin/operators/:operatorId/api', ()=>{});
-routes.post('/admin/operators/:operatorId/api', ()=>{});  // Internal API for testing Will not be available
-/**
- * 2. Can Generate API Credentials (Self and superadmin)
- * 3. Can disable/Enable API
- */
-routes.put('/admin/operators/:operatorId/api', ()=>{});  // Only Self for user
-routes.delete('/admin/operators/:operatorId/api', ()=>{}); // Soft Delete Only
+// /**
+//  * All admins can get update their API Credentials 
+//  */
+// routes.get('/admin/operators/:operatorId/api', ()=>{});
+// routes.post('/admin/operators/:operatorId/api', ()=>{});  // Internal API for testing Will not be available
+// /**
+//  * 2. Can Generate API Credentials (Self and superadmin)
+//  * 3. Can disable/Enable API
+//  */
+// routes.put('/admin/operators/:operatorId/api', ()=>{});  // Only Self for user
+// routes.delete('/admin/operators/:operatorId/api', ()=>{}); // Soft Delete Only
 
 
 

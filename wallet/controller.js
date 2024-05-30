@@ -5,6 +5,8 @@ const verifyUser = async (req ,res)=>{
     try{
    const amount = 3000
    const { id ,client_secret , user_id , currency} = res.locals.auth.user
+   const USER_sql = "update  user_profile set is_verify = ? where user_id = ?"
+   const [data] = await read.query(USER_sql , [true , req.body.user_id ])
 const sql = "insert into wallet(user_id , amount  , created_by) values(?, ?, ?)"
 await write.query(sql , [req.body.user_id  , amount , user_id])
         return res.status(200).send({ status: true, msg : "wallet add successfully" })
