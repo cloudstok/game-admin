@@ -7,7 +7,7 @@ const { addUser, getUser, updateUser } = require('../user/controller')
 const upload = require('../middleware/multer')
 const { verifyUser, getWallet, updateWallet } = require('../wallet/controller')
 const { validateBody } = require('../validate/controller')
-const {  loginData, addAdminValidate } = require('../Schema/admin')
+const {  loginData, addAdminValidate, addWallet } = require('../Schema/admin')
 
 const routes = require('express').Router()
 
@@ -83,7 +83,7 @@ routes.delete('/admin/users',  auth(['ADMIN']) ,updateUser); // Soft Delete Only
 
 
 
-routes.post('/admin/users/wallet',auth(['ADMIN']), verifyUser);
+routes.post('/admin/users/wallet' ,validateBody(addWallet) ,auth(['ADMIN']), verifyUser);
 routes.get('/admin/users/wallet',auth(['ADMIN']), getWallet);
 routes.put('/admin/users/wallet',auth(['ADMIN']), updateWallet);
 
