@@ -32,7 +32,7 @@ const getWallet = async(req ,res)=>{
 const updateWallet = async(req ,res)=>{
     try{
         const sql = "update wallet set ? where id = ?"
-       const data = await read.query(sql , [req.body , req.query.id])
+       const data = await read.query(sql , [req.body , req.query.user_id])
        return res.status(200).send({ status: true, msg : "Find Data" , data })
 
     }catch(er){

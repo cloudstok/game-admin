@@ -11,8 +11,14 @@ const addAdminValidate = Joi.object({
      currency :Joi.string().required(),
 })
 
+const addWallet = Joi.object({
+    user_id : Joi.string().min(3).max(30).required(),
+     currency :Joi.string().required(),
+})
+
 
 module.exports = {
     loginData,
-    addAdminValidate
+    addAdminValidate,
+    addWallet
 }
