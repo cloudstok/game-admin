@@ -6,6 +6,8 @@ const { loginOperator, selfOperator } = require('../admin/controller')
 const { addUser, getUser, updateUser } = require('../user/controller')
 const upload = require('../middleware/multer')
 const { verifyUser, getWallet, updateWallet } = require('../wallet/controller')
+const { validateBody } = require('../validate/controller')
+const {  loginData, addAdminValidate } = require('../Schema/admin')
 
 const routes = require('express').Router()
 
@@ -59,19 +61,19 @@ routes.get('/', async (req, res) => {
 routes.get('/user/login', ()=>{}); 
 
 
-routes.post('/superAdmin/register', register) // Register Super Admin
-routes.post('/superAdmin/login', login) // login super Admin
-routes.post('/superAdmin/admin', auth(['SUPERADMIN']), addAdmin) // super Admin add to admin
+routes.post('/superAdmin/register',validateBody(loginData), register) // Register Super Admin
+routes.post('/superAdmin/login', validateBody(loginData) , login) // login super Admin
+routes.post('/superAdmin/admin',validateBody(addAdminValidate) , auth(['SUPERADMIN']), addAdmin) // super Admin add to admin
 routes.get('/superAdmin/admin', auth(['SUPERADMIN']), getAdmins)  // super Admin find All Admin
 routes.delete('/superAdmin/admin', auth(['SUPERADMIN']), DeleteOperator)  // super Admin Delete  admin
 routes.put('/superAdmin/admin', auth(['SUPERADMIN' , 'ADMIN']), updateOperator) // super Admin and Admin update  Admin data
-routes.post('/admin/login', loginOperator)  // login Admin 
+routes.post('/admin/login',validateBody(loginData) , loginOperator)  // login Admin 
 routes.get('admin/bet', auth(['ADMIN']), getBet) // admin find bet data
-routes.get('/admin/round/stats', auth(['ADMIN']), roundStats) // Admin find  round stats data
+//routes.get('/admin/round/stats', auth(['ADMIN']), roundStats) // Admin find  round stats data
 routes.get('/admin/self/admin  ', auth(['ADMIN']), selfOperator) // Admin find Self Data
 //routes.post('/admin/add/user', auth(['ADMIN']), addUser)  // admin Add to user
 routes.post('/admin/reset/password' , auth(['ADMIN']), resetPassword)  //super admin  and admin reset  password 
-routes.post('/superAdmin/change/password' , auth(['SUPERADMIN']), changePassword)  //super admin  change password for admin 
+routes.post('/superAdmin/change/password'  ,validateBody(loginData) , auth(['SUPERADMIN']), changePassword)  //super admin  change password for admin 
 
 
 routes.get('/admin/users', auth(['ADMIN']), getUser)
