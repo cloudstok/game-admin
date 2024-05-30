@@ -3,7 +3,7 @@ use admin_game;
 
 CREATE TABLE `user_credentials` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `user_id` varchar(255) NOT NULL,
+   `user_id` varchar(255) unique NOT NULL,
    `password` varchar(255) NOT NULL,
    `role` ENUM('ADMIN', 'SUPERADMIN') DEFAULT 'ADMIN' ,
    `is_deleted` tinyint(1) NOT NULL DEFAULT '1',
@@ -16,7 +16,7 @@ CREATE TABLE `user_credentials` (
 
 CREATE TABLE `admin_profile` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `user_id` varchar(255) NOT NULL,
+   `user_id` varchar(255)  unique NOT NULL,
    `client_secret` varchar(255) NOT NULL,
    `is_active` boolean NOT NULL DEFAULT 1,
    `currency` varchar(3) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE `admin_profile` (
 
 CREATE TABLE `user_profile` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `user_id` varchar(255) NOT NULL,
+   `user_id` varchar(255) unique NOT NULL,
    `is_active` tinyint(1) NOT NULL DEFAULT '1',
    `name` varchar(255) NOT NULL,
    `email` varchar(255) DEFAULT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE `user_profile` (
 
 CREATE TABLE `wallet` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `user_id` varchar(255) DEFAULT NULL,
+   `user_id` varchar(255) unique DEFAULT NULL,
    `amount` varchar(20) DEFAULT NULL,
    `is_active` tinyint(1) NOT NULL DEFAULT '1',
    `is_deleted` tinyint(1) NOT NULL DEFAULT '1',
