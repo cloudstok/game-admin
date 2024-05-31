@@ -76,8 +76,8 @@ routes.post('/admin/reset/password' , auth(['ADMIN']), resetPassword)  //super a
 routes.post('/superAdmin/change/password'  ,validateBody(loginData) , auth(['SUPERADMIN']), changePassword)  //super admin  change password for admin 
 
 
-routes.get('/admin/users', auth(['ADMIN']), getUser)
-routes.post('/admin/users', auth(['ADMIN']),addUser);  // Internal API for testing Will not be available
+routes.get('/admin/users',auth(['ADMIN']), getUser)
+routes.post('/admin/users' , upload.single("file" , 1), auth(['ADMIN']),addUser);  // Internal API for testing Will not be available
 routes.put('/admin/users', auth(['ADMIN']), updateUser);  // Only Self for user
 routes.delete('/admin/users',  auth(['ADMIN']) ,updateUser); // Soft Delete Only
 
