@@ -32,19 +32,21 @@ CREATE TABLE `admin_profile` (
 
 CREATE TABLE `user_profile` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `user_id` varchar(255) unique NOT NULL,
+   `user_id` varchar(255) NOT NULL,
    `is_active` tinyint(1) NOT NULL DEFAULT '1',
    `name` varchar(255) NOT NULL,
    `email` varchar(255) DEFAULT NULL,
    `phone` varchar(20) DEFAULT NULL,
+   `currency` varchar(3) DEFAULT NULL,
+   `url` varchar(255) DEFAULT NULL,
    `is_deleted` tinyint(1) NOT NULL DEFAULT '1',
    `created_by` varchar(255) NOT NULL,
    `is_verify` tinyint(1) DEFAULT '0',
    `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
    `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-   PRIMARY KEY (`id`)
+   PRIMARY KEY (`id`),
+   UNIQUE KEY `user_id` (`user_id`)
  ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
-
 CREATE TABLE `wallet` (
    `id` int NOT NULL AUTO_INCREMENT,
    `user_id` varchar(255) unique DEFAULT NULL,
