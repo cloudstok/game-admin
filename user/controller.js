@@ -44,6 +44,13 @@ const getUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
+        let url = null
+        if (req.file) {
+            const { ETag, ServerSideEncryption, Location, key, Key, Bucket } = await uploadImage(req.file)
+            url = Location
+
+        }
+        req.body.url = url
         const user_id = req.query.user_id
 
         const sql = "update  user_profile set ? where user_id = ?"
