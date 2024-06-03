@@ -12,8 +12,6 @@ const addUser = async (req, res) => {
             url = Location
 
         }
-
-
         const { name, currency, email, phone } = req.body;
         const userid = await generateUserId(name)
         const { user_id } = res.locals.auth.user
